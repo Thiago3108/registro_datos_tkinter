@@ -10,7 +10,7 @@ from tkinter import messagebox, ttk
 # funciones de la app
 #-------------------------
 
-# abrir toplevel centigrados
+# abrir toplevel notas
 def abrir_toplevel_notas():
     global toplevel_notas
     toplevel_notas = Toplevel()
@@ -72,6 +72,53 @@ def abrir_toplevel_notas():
     bt_aceptar = Button(frame_entrada,text="Aceptar", command=aceptar)
     bt_aceptar.place(x=250, y=70, width=100, height=30)
 
+# abrir toplevel datos medicos
+def abrir_toplevel_medico():
+    global toplevel_medico
+    toplevel_medico = Toplevel()
+    toplevel_medico.title("Registro de datos medicos")
+    toplevel_medico.resizable(False, False)
+    toplevel_medico.geometry("400x220")
+    toplevel_medico.config(bg="white")
+
+
+   
+    # etiqueta para el registro de notas
+    lb_medico = Label(toplevel_medico, text = "Indice de masa corporal ")
+    lb_medico.config(bg="white", fg="dark khaki", font=("Helvetica", 18))
+    lb_medico.place(x=10, y=10)
+
+    #--------------------------------
+    # frame entrada datos en el
+    #--------------------------------
+    frame_entrada = Frame(toplevel_medico)
+    frame_entrada.config(bg="snow2", width=380, height=160)
+    frame_entrada.place(x=10, y=50)
+
+    # etiqueta para valor de la nota 1
+    lb_medico = Label(frame_entrada, text = "Peso (En Kg) = ")
+    lb_medico.config(bg="snow2", fg="black", font=("Helvetica", 16))
+    lb_medico.place(x=10, y=20)
+
+    # caja de texto para valor de la nota 1
+    entry_medico = Entry(frame_entrada, textvariable=kilo)
+    entry_medico.config(bg="white", fg="black", font=("Times New Roman", 16), width=6)
+    entry_medico.focus_set()
+    entry_medico.place(x=160,y=16)
+
+        # etiqueta para valor de la nota 2
+    lb_medico = Label(frame_entrada, text = "Estatura = ")
+    lb_medico.config(bg="snow2", fg="black", font=("Helvetica", 16))
+    lb_medico.place(x=10, y=60)
+
+    # caja de texto para valor de la nota 2
+    entry_medico = Entry(frame_entrada, textvariable=estatura)
+    entry_medico.config(bg="white", fg="black", font=("Times New Roman", 16), width=6)
+    entry_medico.place(x=120,y=60)
+
+    # boton para aceptar 
+    bt_aceptar = Button(frame_entrada,text="Aceptar", command=aceptar2)
+    bt_aceptar.place(x=10, y=110, width=100, height=30)
 # aceptar
 def aceptar():
     global nota
@@ -81,6 +128,16 @@ def aceptar():
     nota_2 = float(nota2.get())
     nota_3 = float(nota3.get())
     toplevel_notas.destroy()
+def aceptar2():
+    global kilo1
+    global estatura1
+    global name
+    global cod 
+    cod= cod.get()
+    name= name.get()
+    kilo1 = float(kilo.get())
+    estatura1 = float(estatura.get())
+    toplevel_medico.destroy()
 
 # convertir
 def promediar():
@@ -91,17 +148,23 @@ def promediar():
         messagebox.showinfo("Promedio de notas", "Promedio realizado")
     else:
         messagebox.showwarning("Advertencia", "Debe ingresar notas para calcular el promedio")
+
+def IMC():
+    t_resultados2.delete("1.0","end")
+    if estatura1 != 0 and kilo1 != 0:
+        masa_corporal= kilo1/(estatura1 **2 )
+        t_resultados2.insert("end", f"El estudiante {name}, registrado con el codigo {cod} posee un IMC de: \n{masa_corporal}\n")
+        messagebox.showinfo("IMC", "IMC realizado")
+    else:
+        messagebox.showwarning("Advertencia", "Debe ingresar dato para calcular el IMC")
     
 # borrar
 def borrar():
     messagebox.showinfo("Registro de estudiante", "Los datos serán borrados")
     
     prom_selected.set("")
-    notas.set("")
-    nota2.set("")
-    nota3.set("")
-    nota_final.set("")
     t_resultados.delete("1.0","end")
+    t_resultados2.delete("1.0","end")
     
 # salir
 def salir():
@@ -130,11 +193,12 @@ ventana_principal.config(bg="khaki")
 #--------------------------------
 # variables globales
 #--------------------------------
-notas,nota2,nota3,name,cod = StringVar(), StringVar(), StringVar(), StringVar(), StringVar()
+notas,nota2,nota3,name,cod,kilo, estatura = StringVar(), StringVar(), StringVar(), StringVar(), StringVar(), StringVar(), StringVar()
 prom = StringVar()
 prom = ["Fundamentos de programacion", "Calculo I", "Alegebra lineal", "Quimica Basica", "Taller de lenguaje"]
 prom_selected = StringVar()
 nota_final= StringVar()
+
 
 
 
@@ -158,7 +222,7 @@ lb_c.place(x=10, y=50)
 
 # caja de texto para el nombre
 entry_c = Entry(frame_entrada, textvariable=name)
-entry_c.config(bg="white", fg="blue", font=("Times New Roman", 10), width=30)
+entry_c.config(bg="white", fg="black", font=("Times New Roman", 10), width=30)
 entry_c.focus_set()
 entry_c.place(x=10,y=80)
 
@@ -169,7 +233,7 @@ lb_c.place(x=10, y=105)
 
 # caja de texto para el codigo de estudiante 
 entry_c = Entry(frame_entrada, textvariable=cod)
-entry_c.config(bg="white", fg="blue", font=("Times New Roman", 10), width=30)
+entry_c.config(bg="white", fg="black", font=("Times New Roman", 10), width=30)
 entry_c.place(x=10,y=135)
 
 # boton para abrir Toplevel para ingresar notas
@@ -180,7 +244,7 @@ bt_notas.place(x=290, y=60, width=100)
 
 # boton para abrir Toplevel para ingresar datos medicos
 medico = PhotoImage(file="medico.png")
-bt_medico = Button(frame_entrada,image=medico ,text="Ingresar datos", command=abrir_toplevel_notas)
+bt_medico = Button(frame_entrada,image=medico ,text="Ingresar datos", command=abrir_toplevel_medico)
 bt_medico.config(bg="white")
 bt_medico.place(x=430, y=60, width=100)
 
@@ -193,15 +257,18 @@ frame_operaciones.place(x=10, y=200)
 
 # boton para promediar
 bt_convertir = Button(frame_operaciones,text="Promediar", command=promediar)
-bt_convertir.place(x=70, y=35, width=100, height=30)
+bt_convertir.place(x=36, y=35, width=100, height=30)
+# boton para el indice de masa corporal
+bt_convertir = Button(frame_operaciones,text="Calcular", command=IMC)
+bt_convertir.place(x=172, y=35, width=100, height=30)
 
 # boton para borrar
 bt_borrar = Button(frame_operaciones, text="Borrar", command=borrar)
-bt_borrar.place(x=240, y=35, width=100, height=30)
+bt_borrar.place(x=308, y=35, width=100, height=30)
 
 # boton para salir
 bt_salir = Button(frame_operaciones,text="Salir", command=salir)
-bt_salir.place(x=410, y=35, width=100, height=30)
+bt_salir.place(x=444, y=35, width=100, height=30)
 
 #--------------------------------
 # frame resultados
@@ -213,7 +280,11 @@ frame_resultados.place(x=10, y=310)
 # area de texto para los resultados
 t_resultados = Text(frame_resultados)
 t_resultados.config(bg="white", fg="black", font=("Courier", 12))
-t_resultados.place(x=10,y=10,width=560,height=160)
+t_resultados.place(x=10,y=10,width=265,height=260)
+
+t_resultados2 = Text(frame_resultados)
+t_resultados2.config(bg="white", fg="black", font=("Courier", 12))
+t_resultados2.place(x=302,y=10,width=265,height=260)
 
 # run
 # se ejecuta el metodo mainloop() de la clase Tk() a través de la instancia ventana_principal. Este metodo despliega la ventana en pantalla y queda a la espera de lo que el usuario haga (click en un boton, escribir, etc).  Cada acción del usuario se conoce como un evento.  El método mainloop() es un bucle infinito.
