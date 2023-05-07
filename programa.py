@@ -19,6 +19,7 @@ def abrir_toplevel_notas():
     toplevel_notas.geometry("400x200")
     toplevel_notas.config(bg="white")
 
+
    
     # etiqueta para el registro de notas
     lb_notas = Label(toplevel_notas, text = "Notas del estudiante ")
@@ -63,7 +64,7 @@ def abrir_toplevel_notas():
     entry_notas.config(bg="white", fg="black", font=("Times New Roman", 18), width=6)
     entry_notas.place(x=120,y=100)
 
-    # lista para kelvin y fahrenheit
+    # lista para las materias
     cmb_kf = ttk.Combobox(frame_entrada, textvariable=prom_selected, values=prom, font=("Helvetica", 12))
     cmb_kf.place(x=250, y=30, width= 100, height=30)
 
@@ -73,29 +74,35 @@ def abrir_toplevel_notas():
 
 # aceptar
 def aceptar():
-    global cent
-    cent = int(notas.get())
+    global nota
+    global nota_2
+    global nota_3
+    nota = float(notas.get())
+    nota_2 = float(nota2.get())
+    nota_3 = float(nota3.get())
     toplevel_notas.destroy()
 
 # convertir
 def promediar():
-    messagebox.showinfo("Promedio de notas", "Promedio realizado")
-    # cent = int(c.get())
-    if prom.get()=="kelvin":
-        k = cent + 273.15
-        t_resultados.insert(INSERT, f"\n{int(notas.get())} °C equivalen a {k} °K")
-    elif prom.get() == "fahrenheit":
-        f = cent*9/5 + 32
-        t_resultados.insert(INSERT, f"\n{int(notas.get())} °C equivalen a {f} °F")
+    t_resultados.delete("1.0","end")
+    if nota != 0 and nota_2 != 0 and nota_3 != 0:
+        nota_final = (nota + nota_2 + nota_3) / 3
+        t_resultados.insert("end", f"Sus notas en la asignatura {prom_selected.get()} fueron:\nNota 1 => {nota}\nNota 2 => {nota_2}\nNota 3 => {nota_3}\nPromedio => {nota_final}\n")
+        messagebox.showinfo("Promedio de notas", "Promedio realizado")
     else:
-        t_resultados.insert(INSERT, "Debe seleccionar una opción")
+        messagebox.showwarning("Advertencia", "Debe ingresar notas para calcular el promedio")
     
 # borrar
 def borrar():
     messagebox.showinfo("Registro de estudiante", "Los datos serán borrados")
+    
+    prom_selected.set("")
     notas.set("")
+    nota2.set("")
+    nota3.set("")
+    nota_final.set("")
     t_resultados.delete("1.0","end")
-
+    
 # salir
 def salir():
     messagebox.showinfo("Registro de estudiante", "La app se va a cerrar")
@@ -127,6 +134,7 @@ notas,nota2,nota3,name,cod = StringVar(), StringVar(), StringVar(), StringVar(),
 prom = StringVar()
 prom = ["Fundamentos de programacion", "Calculo I", "Alegebra lineal", "Quimica Basica", "Taller de lenguaje"]
 prom_selected = StringVar()
+nota_final= StringVar()
 
 
 
@@ -165,16 +173,15 @@ entry_c.config(bg="white", fg="blue", font=("Times New Roman", 10), width=30)
 entry_c.place(x=10,y=135)
 
 # boton para abrir Toplevel para ingresar notas
-# logo de la app
-#logo = PhotoImage(file="img/temperatura.png")
-#lb_logo = Label(frame_entrada, image=logo, bg="white")
-#lb_logo.place(x=70,y=40)
-notas = PhotoImage(file="notas.png")
-bt_centigrados = Button(frame_entrada,image=notas ,text="Ingresar notas", command=abrir_toplevel_notas)
-bt_centigrados.place(x=290, y=60, width=100)
+nota = PhotoImage(file="notas.png")
+bt_notas = Button(frame_entrada,image=nota ,text="Ingresar notas", command=abrir_toplevel_notas)
+bt_notas.config(bg="white")
+bt_notas.place(x=290, y=60, width=100)
 
 # boton para abrir Toplevel para ingresar datos medicos
-bt_medico = Button(frame_entrada, text="Ingresar datos", command=abrir_toplevel_notas)
+medico = PhotoImage(file="medico.png")
+bt_medico = Button(frame_entrada,image=medico ,text="Ingresar datos", command=abrir_toplevel_notas)
+bt_medico.config(bg="white")
 bt_medico.place(x=430, y=60, width=100)
 
 #--------------------------------
@@ -184,17 +191,17 @@ frame_operaciones = Frame(ventana_principal)
 frame_operaciones.config(bg="white", width=580, height=100)
 frame_operaciones.place(x=10, y=200)
 
-# boton para convertir
+# boton para promediar
 bt_convertir = Button(frame_operaciones,text="Promediar", command=promediar)
-bt_convertir.place(x=45, y=35, width=100, height=30)
+bt_convertir.place(x=70, y=35, width=100, height=30)
 
 # boton para borrar
 bt_borrar = Button(frame_operaciones, text="Borrar", command=borrar)
-bt_borrar.place(x=190, y=35, width=100, height=30)
+bt_borrar.place(x=240, y=35, width=100, height=30)
 
 # boton para salir
 bt_salir = Button(frame_operaciones,text="Salir", command=salir)
-bt_salir.place(x=335, y=35, width=100, height=30)
+bt_salir.place(x=410, y=35, width=100, height=30)
 
 #--------------------------------
 # frame resultados
@@ -205,7 +212,7 @@ frame_resultados.place(x=10, y=310)
 
 # area de texto para los resultados
 t_resultados = Text(frame_resultados)
-t_resultados.config(bg="white", fg="green yellow", font=("Courier", 18))
+t_resultados.config(bg="white", fg="black", font=("Courier", 12))
 t_resultados.place(x=10,y=10,width=560,height=160)
 
 # run
