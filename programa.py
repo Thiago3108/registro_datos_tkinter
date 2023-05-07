@@ -19,8 +19,6 @@ def abrir_toplevel_notas():
     toplevel_notas.geometry("400x200")
     toplevel_notas.config(bg="white")
 
-
-   
     # etiqueta para el registro de notas
     lb_notas = Label(toplevel_notas, text = "Notas del estudiante ")
     lb_notas.config(bg="white", fg="dark khaki", font=("Helvetica", 18))
@@ -81,8 +79,6 @@ def abrir_toplevel_medico():
     toplevel_medico.geometry("400x220")
     toplevel_medico.config(bg="white")
 
-
-   
     # etiqueta para el registro de notas
     lb_medico = Label(toplevel_medico, text = "Indice de masa corporal ")
     lb_medico.config(bg="white", fg="dark khaki", font=("Helvetica", 18))
@@ -133,8 +129,8 @@ def aceptar2():
     global estatura1
     global name
     global cod 
-    cod= cod.get()
-    name= name.get()
+    cod = cod.get()
+    name = name.get()
     kilo1 = float(kilo.get())
     estatura1 = float(estatura.get())
     toplevel_medico.destroy()
@@ -161,8 +157,8 @@ def IMC():
 # borrar
 def borrar():
     messagebox.showinfo("Registro de estudiante", "Los datos serán borrados")
-    
     prom_selected.set("")
+    toplevel_notas.configure(state="normal")
     t_resultados.delete("1.0","end")
     t_resultados2.delete("1.0","end")
     
