@@ -1,5 +1,5 @@
 #---------------------------------
-# Desktop app No. 2- Temperatura
+# Desktop app -Estudiante 
 #---------------------------------
 
 # se importa la libreria tkinter con todas sus funciones
@@ -19,6 +19,7 @@ def abrir_toplevel_notas():
     toplevel_notas.geometry("400x200")
     toplevel_notas.config(bg="white")
 
+
     # etiqueta para el registro de notas
     lb_notas = Label(toplevel_notas, text = "Notas del estudiante ")
     lb_notas.config(bg="white", fg="dark khaki", font=("Helvetica", 18))
@@ -27,48 +28,59 @@ def abrir_toplevel_notas():
     #--------------------------------
     # frame entrada datos en el
     #--------------------------------
-    frame_entrada = Frame(toplevel_notas)
-    frame_entrada.config(bg="snow2", width=380, height=140)
-    frame_entrada.place(x=10, y=50)
+    frame_notas = Frame(toplevel_notas)
+    frame_notas.config(bg="snow2", width=380, height=140)
+    frame_notas.place(x=10, y=50)
 
     # etiqueta para valor de la nota 1
-    lb_notas = Label(frame_entrada, text = "Nota 1 = ")
+    lb_notas = Label(frame_notas, text = "Nota 1 = ")
     lb_notas.config(bg="snow2", fg="black", font=("Helvetica", 18))
     lb_notas.place(x=10, y=20)
 
     # caja de texto para valor de la nota 1
-    entry_notas = Entry(frame_entrada, textvariable=notas)
+    entry_notas = Entry(frame_notas, textvariable=notas)
     entry_notas.config(bg="white", fg="black", font=("Times New Roman", 18), width=6)
     entry_notas.focus_set()
     entry_notas.place(x=120,y=20)
 
         # etiqueta para valor de la nota 2
-    lb_notas = Label(frame_entrada, text = "Nota 2 = ")
+    lb_notas = Label(frame_notas, text = "Nota 2 = ")
     lb_notas.config(bg="snow2", fg="black", font=("Helvetica", 18))
     lb_notas.place(x=10, y=60)
 
     # caja de texto para valor de la nota 2
-    entry_notas = Entry(frame_entrada, textvariable=nota2)
+    entry_notas = Entry(frame_notas, textvariable=nota2)
     entry_notas.config(bg="white", fg="black", font=("Times New Roman", 18), width=6)
     entry_notas.place(x=120,y=60)
 
         # etiqueta para valor de la nota 3
-    lb_notas = Label(frame_entrada, text = "Nota 3 = ")
+    lb_notas = Label(frame_notas, text = "Nota 3 = ")
     lb_notas.config(bg="snow2", fg="black", font=("Helvetica", 18))
     lb_notas.place(x=10, y=100)
 
     # caja de texto para valor de la nota 3
-    entry_notas = Entry(frame_entrada, textvariable=nota3)
+    entry_notas = Entry(frame_notas, textvariable=nota3)
     entry_notas.config(bg="white", fg="black", font=("Times New Roman", 18), width=6)
     entry_notas.place(x=120,y=100)
 
     # lista para las materias
-    cmb_kf = ttk.Combobox(frame_entrada, textvariable=prom_selected, values=prom, font=("Helvetica", 12))
-    cmb_kf.place(x=250, y=30, width= 100, height=30)
+    cmb_materias = ttk.Combobox(frame_notas, textvariable=prom_selected, values=prom, font=("Helvetica", 12))
+    cmb_materias.place(x=250, y=30, width= 100, height=30)
 
     # boton para aceptar 
-    bt_aceptar = Button(frame_entrada,text="Aceptar", command=aceptar)
+    bt_aceptar = Button(frame_notas,text="Aceptar", command=aceptar)
     bt_aceptar.place(x=250, y=70, width=100, height=30)
+
+
+# aceptar
+def aceptar():
+    toplevel_notas.destroy()
+    global nota
+    global nota_2
+    global nota_3
+    nota = float(notas.get())
+    nota_2 = float(nota2.get())
+    nota_3 = float(nota3.get())
 
 # abrir toplevel datos medicos
 def abrir_toplevel_medico():
@@ -80,60 +92,52 @@ def abrir_toplevel_medico():
     toplevel_medico.config(bg="white")
 
     # etiqueta para el registro de notas
-    lb_medico = Label(toplevel_medico, text = "Indice de masa corporal ")
+    lb_medico = Label(toplevel_medico, text = "Indice de masa corporal")
     lb_medico.config(bg="white", fg="dark khaki", font=("Helvetica", 18))
     lb_medico.place(x=10, y=10)
 
     #--------------------------------
     # frame entrada datos en el
     #--------------------------------
-    frame_entrada = Frame(toplevel_medico)
-    frame_entrada.config(bg="snow2", width=380, height=160)
-    frame_entrada.place(x=10, y=50)
+    frame_medico = Frame(toplevel_medico)
+    frame_medico.config(bg="snow2", width=380, height=160)
+    frame_medico.place(x=10, y=50)
 
     # etiqueta para valor de la nota 1
-    lb_medico = Label(frame_entrada, text = "Peso (En Kg) = ")
+    lb_medico = Label(frame_medico, text = "Peso (En Kg) = ")
     lb_medico.config(bg="snow2", fg="black", font=("Helvetica", 16))
     lb_medico.place(x=10, y=20)
 
     # caja de texto para valor de la nota 1
-    entry_medico = Entry(frame_entrada, textvariable=kilo)
+    entry_medico = Entry(frame_medico, textvariable=kilo)
     entry_medico.config(bg="white", fg="black", font=("Times New Roman", 16), width=6)
     entry_medico.focus_set()
     entry_medico.place(x=160,y=16)
 
-        # etiqueta para valor de la nota 2
-    lb_medico = Label(frame_entrada, text = "Estatura = ")
+    # etiqueta para valor de la nota 2
+    lb_medico = Label(frame_medico, text = "Estatura = ")
     lb_medico.config(bg="snow2", fg="black", font=("Helvetica", 16))
     lb_medico.place(x=10, y=60)
 
     # caja de texto para valor de la nota 2
-    entry_medico = Entry(frame_entrada, textvariable=estatura)
+    entry_medico = Entry(frame_medico, textvariable=estatura)
     entry_medico.config(bg="white", fg="black", font=("Times New Roman", 16), width=6)
     entry_medico.place(x=120,y=60)
 
     # boton para aceptar 
-    bt_aceptar = Button(frame_entrada,text="Aceptar", command=aceptar2)
-    bt_aceptar.place(x=10, y=110, width=100, height=30)
-# aceptar
-def aceptar():
-    global nota
-    global nota_2
-    global nota_3
-    nota = float(notas.get())
-    nota_2 = float(nota2.get())
-    nota_3 = float(nota3.get())
-    toplevel_notas.destroy()
+    bt_aceptar2 = Button(frame_medico,text="Aceptar", command=aceptar2)
+    bt_aceptar2.place(x=10, y=110, width=100, height=30)
+ 
+#aceptar2 
 def aceptar2():
+    toplevel_medico.destroy()
     global kilo1
     global estatura1
     global name
     global cod 
-    cod = cod.get()
-    name = name.get()
     kilo1 = float(kilo.get())
     estatura1 = float(estatura.get())
-    toplevel_medico.destroy()
+    
 
 # convertir
 def promediar():
@@ -149,7 +153,7 @@ def IMC():
     t_resultados2.delete("1.0","end")
     if estatura1 != 0 and kilo1 != 0:
         masa_corporal= kilo1/(estatura1 **2 )
-        t_resultados2.insert("end", f"El estudiante {name}, registrado con el codigo {cod} posee un IMC de: \n{masa_corporal}\n")
+        t_resultados2.insert("end", f"El estudiante {name.get()}, registrado con el codigo {cod.get()} posee un IMC de: \n{masa_corporal}\n")
         messagebox.showinfo("IMC", "IMC realizado")
     else:
         messagebox.showwarning("Advertencia", "Debe ingresar dato para calcular el IMC")
@@ -158,7 +162,6 @@ def IMC():
 def borrar():
     messagebox.showinfo("Registro de estudiante", "Los datos serán borrados")
     prom_selected.set("")
-    toplevel_notas.configure(state="normal")
     t_resultados.delete("1.0","end")
     t_resultados2.delete("1.0","end")
     
@@ -195,9 +198,6 @@ prom = ["Fundamentos de programacion", "Calculo I", "Alegebra lineal", "Quimica 
 prom_selected = StringVar()
 nota_final= StringVar()
 
-
-
-
 #--------------------------------
 # frame entrada datos
 #--------------------------------
@@ -205,44 +205,43 @@ frame_entrada = Frame(ventana_principal)
 frame_entrada.config(bg="white", width=580, height=180)
 frame_entrada.place(x=10, y=10)
 
-
 # titulo de la app
 titulo = Label(frame_entrada, text="Registro de estudiante")
 titulo.config(bg = "white",fg="dark khaki", font=("MuseJazz Text", 20))
 titulo.place(x=10,y=10)
 
 # etiqueta para valor del nombre
-lb_c = Label(frame_entrada, text = "Nombre")
-lb_c.config(bg="white", fg="black", font=("MuseJazz Text", 12))
-lb_c.place(x=10, y=50)
+lb_nombre = Label(frame_entrada, text = "Nombre")
+lb_nombre.config(bg="white", fg="black", font=("MuseJazz Text", 12))
+lb_nombre.place(x=10, y=50)
 
 # caja de texto para el nombre
-entry_c = Entry(frame_entrada, textvariable=name)
-entry_c.config(bg="white", fg="black", font=("Times New Roman", 10), width=30)
-entry_c.focus_set()
-entry_c.place(x=10,y=80)
+entry_nombre = Entry(frame_entrada, textvariable=name)
+entry_nombre.config(bg="white", fg="black", font=("Times New Roman", 10), width=30)
+entry_nombre.focus_set()
+entry_nombre.place(x=10,y=80)
 
 # etiqueta para valor del codigo de estudiante
-lb_c = Label(frame_entrada, text = "Codigo de estudiante")
-lb_c.config(bg="white", fg="black", font=("MuseJazz Text", 12))
-lb_c.place(x=10, y=105)
+lb_codigo = Label(frame_entrada, text = "Codigo de estudiante")
+lb_codigo.config(bg="white", fg="black", font=("MuseJazz Text", 12))
+lb_codigo.place(x=10, y=105)
 
 # caja de texto para el codigo de estudiante 
-entry_c = Entry(frame_entrada, textvariable=cod)
-entry_c.config(bg="white", fg="black", font=("Times New Roman", 10), width=30)
-entry_c.place(x=10,y=135)
-
-# boton para abrir Toplevel para ingresar notas
-nota = PhotoImage(file="notas.png")
-bt_notas = Button(frame_entrada,image=nota ,text="Ingresar notas", command=abrir_toplevel_notas)
-bt_notas.config(bg="white")
-bt_notas.place(x=290, y=60, width=100)
+entry_codigo = Entry(frame_entrada, textvariable=cod)
+entry_codigo.config(bg="white", fg="black", font=("Times New Roman", 10), width=30)
+entry_codigo.place(x=10,y=135)
 
 # boton para abrir Toplevel para ingresar datos medicos
 medico = PhotoImage(file="medico.png")
 bt_medico = Button(frame_entrada,image=medico ,text="Ingresar datos", command=abrir_toplevel_medico)
 bt_medico.config(bg="white")
 bt_medico.place(x=430, y=60, width=100)
+
+# boton para abrir Toplevel para ingresar notas
+nota = PhotoImage(file="notas.png")
+bt_nota = Button(frame_entrada,image=nota ,text="Ingresar notas", command=abrir_toplevel_notas)
+bt_nota.config(bg="white")
+bt_nota.place(x=290, y=60, width=100)
 
 #--------------------------------
 # frame operaciones
