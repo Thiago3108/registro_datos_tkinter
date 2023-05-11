@@ -144,10 +144,16 @@ def promediar():
     t_resultados.delete("1.0","end")
     if nota != 0 and nota_2 != 0 and nota_3 != 0:
         nota_final = (nota + nota_2 + nota_3) / 3
-        t_resultados.insert("end", f"Sus notas en la asignatura {prom_selected.get()} fueron:\nNota 1 => {nota}\nNota 2 => {nota_2}\nNota 3 => {nota_3}\nPromedio => {nota_final}\n")
-        messagebox.showinfo("Promedio de notas", "Promedio realizado")
+        if nota_final < 3:
+            t_resultados.insert("end", f"Sus notas en la asignatura {prom_selected.get()} fueron:\nNota 1 => {nota}\nNota 2 => {nota_2}\nNota 3 => {nota_3}\nPromedio => {nota_final}\nReprobaste la asignatura")
+            messagebox.showinfo("Promedio de notas", "Promedio realizado")
+        elif nota_final > 5:
+            messagebox.showwarning("Advertencia", "Las notas ingresadas no son validas")
+        else:
+            t_resultados.insert("end", f"Sus notas en la asignatura {prom_selected.get()} fueron:\nNota 1 => {nota}\nNota 2 => {nota_2}\nNota 3 => {nota_3}\nPromedio => {nota_final}\nFelicidades, aprobaste la asignatura!!!")
+            messagebox.showinfo("Promedio de notas", "Promedio realizado")
     else:
-        messagebox.showwarning("Advertencia", "Debe ingresar notas para calcular el promedio")
+        messagebox.showwarning("Advertencia", "Debe ingresar las 3 notas para calcular el promedio")
 
 def IMC():
     t_resultados2.delete("1.0","end")
@@ -235,12 +241,15 @@ entry_codigo.place(x=10,y=135)
 medico = PhotoImage(file="medico.png")
 bt_medico = Button(frame_entrada,image=medico ,text="Ingresar datos", command=abrir_toplevel_medico)
 bt_medico.config(bg="white")
+bt_medico.configure(relief="flat", borderwidth=5)
 bt_medico.place(x=430, y=60, width=100)
 
 # boton para abrir Toplevel para ingresar notas
 notaimg = PhotoImage(file="notas.png")
 bt_nota = Button(frame_entrada,image=notaimg ,text="Ingresar notas", command=abrir_toplevel_notas)
 bt_nota.config(bg="white")
+bt_nota.configure(relief="flat", borderwidth=5)
+#"flat", "raised", "sunken", "ridge" y "groove"
 bt_nota.place(x=290, y=60, width=100)
 
 #--------------------------------
@@ -251,18 +260,22 @@ frame_operaciones.config(bg="white", width=580, height=100)
 frame_operaciones.place(x=10, y=200)
 
 # boton para promediar
-bt_convertir = Button(frame_operaciones,text="Promediar", command=promediar)
+bt_convertir = Button(frame_operaciones,text="Notas", command=promediar)
+bt_convertir.config(bg="goldenrod2", fg="black", font=("MuseJazz Text", 12))
 bt_convertir.place(x=36, y=35, width=100, height=30)
 # boton para el indice de masa corporal
-bt_convertir = Button(frame_operaciones,text="Calcular", command=IMC)
+bt_convertir = Button(frame_operaciones,text="IMC", command=IMC)
+bt_convertir.config(bg="indian red", fg="black", font=("MuseJazz Text", 12))
 bt_convertir.place(x=172, y=35, width=100, height=30)
 
 # boton para borrar
 bt_borrar = Button(frame_operaciones, text="Borrar", command=borrar)
+bt_borrar.config(bg="bisque2", fg="black", font=("MuseJazz Text", 12))
 bt_borrar.place(x=308, y=35, width=100, height=30)
 
 # boton para salir
 bt_salir = Button(frame_operaciones,text="Salir", command=salir)
+bt_salir.config(bg="navajo white", fg="black", font=("MuseJazz Text", 12))
 bt_salir.place(x=444, y=35, width=100, height=30)
 
 #--------------------------------
